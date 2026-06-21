@@ -29,6 +29,8 @@
 - 🔒 **Secure Configuration** — API keys are safely managed using environment variables.
 
 ---
+<img width="993" height="643" alt="image" src="https://github.com/user-attachments/assets/7a0c3d30-ebd4-406e-8b96-08b21b8c54af" />
+<img width="973" height="629" alt="image" src="https://github.com/user-attachments/assets/f567ea48-7a7b-4e3e-945c-f8bf0b21c8b7" />
 
 ## 🛠️ Tech Stack
 
