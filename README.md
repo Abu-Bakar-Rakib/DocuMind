@@ -31,6 +31,7 @@
 ---
 <img width="993" height="643" alt="image" src="https://github.com/user-attachments/assets/7a0c3d30-ebd4-406e-8b96-08b21b8c54af" />
 <img width="1154" height="635" alt="image" src="https://github.com/user-attachments/assets/112a3a63-2b0e-4c0e-9d9b-3e916b0acf09" />
+<img width="1140" height="637" alt="image" src="https://github.com/user-attachments/assets/ce6f3090-f636-4707-99e8-b5fefc5b89c7" />
 
 ## 🛠️ Tech Stack
 
