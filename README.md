@@ -1,4 +1,4 @@
-# 🧠 DocuMind AI
+# 🧠 DocuMind
 
 <p align="center">
   <img src="https://img.shields.io/badge/Built%20with-React-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
