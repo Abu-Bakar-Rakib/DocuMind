@@ -22,11 +22,11 @@
 
 - 📄 **PDF Upload & Indexing** — Drag and drop any PDF; the app automatically extracts text, creates semantic chunks, and indexes them.
 - 🔍 **Vector Similarity Search** — Uses cosine similarity on 768-dimensional embeddings to find the most relevant passages for any question.
-- 🤖 **AI-Powered Q&A** — Powered by Google Gemini (`gemini-flash-latest`) to answer questions with cited context from your documents.
+- 🤖 **AI-Powered Q&A** — Powered by Google Gemini (`gemini-2.0-flash`) to answer questions with cited context from your documents.
 - 💬 **Natural Chat Interface** — Clean chat UI with markdown rendering, animated typing indicators, and collapsible source citations.
 - 🗄️ **Supabase Vector Database** — Stores all document chunks and embeddings in a Postgres database with `pgvector`.
-- 🎨 **Premium Dark UI** — Glassmorphism, animated gradients, ambient glow effects, and smooth micro-animations.
-- ⚡ **Client-Side Processing** — Embeddings and similarity search run directly in the browser — no server required for querying.
+- 🎨 **Premium Dark UI** — High-contrast glassmorphism, animated gradients, ambient glow effects, and smooth micro-animations.
+- 🔒 **Secure Configuration** — API keys are safely managed using environment variables.
 
 ---
 
@@ -36,8 +36,8 @@
 |---|---|
 | **Frontend** | React 18, TypeScript, Vite |
 | **Styling** | Tailwind CSS, custom CSS animations |
-| **AI / LLM** | Google Gemini (`gemini-flash-latest`) |
-| **Embeddings** | Google Gemini Embedding (`gemini-embedding-001`, 768-dim) |
+| **AI / LLM** | Google Gemini (`gemini-2.0-flash`) |
+| **Embeddings** | Google Gemini Embedding (`text-embedding-004`, 768-dim) |
 | **Database** | Supabase (PostgreSQL + pgvector) |
 | **PDF Parsing** | `pdfjs-dist` |
 | **Markdown** | `react-markdown` + `@tailwindcss/typography` |
@@ -105,21 +105,45 @@ CREATE POLICY "select_documents" ON documents FOR SELECT USING (true);
 CREATE POLICY "insert_documents" ON documents FOR INSERT WITH CHECK (true);
 CREATE POLICY "select_chunks" ON document_chunks FOR SELECT USING (true);
 CREATE POLICY "insert_chunks" ON document_chunks FOR INSERT WITH CHECK (true);
+
+-- Create the vector match RPC function
+CREATE OR REPLACE FUNCTION match_chunks (
+  query_embedding vector(768),
+  match_threshold float,
+  match_count int
+)
+RETURNS TABLE (
+  id uuid,
+  document_id uuid,
+  content text,
+  page_number integer,
+  chunk_index integer,
+  similarity float
+)
+LANGUAGE sql STABLE
+AS $$
+  SELECT
+    document_chunks.id,
+    document_chunks.document_id,
+    document_chunks.content,
+    document_chunks.page_number,
+    document_chunks.chunk_index,
+    1 - (document_chunks.embedding <=> query_embedding) AS similarity
+  FROM document_chunks
+  WHERE 1 - (document_chunks.embedding <=> query_embedding) > match_threshold
+  ORDER BY document_chunks.embedding <=> query_embedding
+  LIMIT match_count;
+$$;
 ```
 
-### 4. Configure API keys
+### 4. Configure Environment Variables
 
-Open `src/lib/api.ts` and paste your Google AI API key:
+Create a `.env` file in the root directory of your project:
 
-```typescript
-const GOOGLE_AI_API_KEY = "your-google-ai-api-key-here";
-```
-
-Open `src/lib/supabase.ts` and add your Supabase project URL and anon key:
-
-```typescript
-const supabaseUrl = "https://your-project.supabase.co";
-const supabaseAnonKey = "your-anon-key";
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
+VITE_GOOGLE_AI_API_KEY=your-google-ai-api-key-here
 ```
 
 ### 5. Run the development server
@@ -159,7 +183,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 1. **Upload** — PDF is parsed page by page using `pdfjs-dist`
 2. **Chunk** — Text is split into overlapping semantic chunks (~500 tokens each)
-3. **Embed** — Each chunk is embedded using `gemini-embedding-001` (768 dimensions)
+3. **Embed** — Each chunk is embedded using Gemini's embedding models (768 dimensions)
 4. **Store** — Chunks + embeddings are stored in Supabase's pgvector table
 5. **Query** — User question is embedded, then cosine similarity finds top-k chunks
 6. **Answer** — Top chunks are sent as context to Gemini which answers the question
@@ -181,8 +205,7 @@ src/
 └── index.css               # Global styles, animations, custom scrollbar
 
 supabase/
-├── functions/pdf-qa/       # (Legacy) Supabase Edge Function
-└── migrations/             # SQL migration files
+├── migrations/             # SQL migration files
 ```
 
 ---
