@@ -4,12 +4,13 @@
   <img src="https://img.shields.io/badge/Built%20with-React-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
   <img src="https://img.shields.io/badge/AI-Google%20Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white" />
   <img src="https://img.shields.io/badge/Database-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" />
+  <img src="https://img.shields.io/badge/Architecture-RAG-FF6B6B?style=for-the-badge&logo=databricks&logoColor=white" />
   <img src="https://img.shields.io/badge/Language-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/Styling-TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
 </p>
 
 <p align="center">
-  <strong>Your personal AI-powered knowledge engine. Upload PDFs and extract deep insights through natural conversation.</strong>
+  <strong>A full-stack RAG (Retrieval-Augmented Generation) engine. Upload PDFs and extract deep insights through natural conversation without hallucination.</strong>
 </p>
 
 <p align="center">
@@ -32,7 +33,6 @@
 <img width="993" height="643" alt="image" src="https://github.com/user-attachments/assets/7a0c3d30-ebd4-406e-8b96-08b21b8c54af" />
 <img width="1154" height="635" alt="image" src="https://github.com/user-attachments/assets/112a3a63-2b0e-4c0e-9d9b-3e916b0acf09" />
 <img width="1140" height="637" alt="image" src="https://github.com/user-attachments/assets/ce6f3090-f636-4707-99e8-b5fefc5b89c7" />
-
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
@@ -159,7 +159,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 📖 How It Works
+## 📖 How the RAG Pipeline Works
 
 ```
 ┌─────────────┐    ┌──────────────────┐    ┌────────────────┐
@@ -213,10 +213,6 @@ supabase/
 
 ---
 
-## 📸 Screenshots
-
-> Upload documents on the left, ask questions on the right.
-
 | Feature | Description |
 |---|---|
 | 🌑 Dark glassmorphism UI | Premium dark theme with animated gradient blobs |
@@ -253,3 +249,7 @@ MIT License © 2024 [Abu Bakar Rakib](https://github.com/abubakarrakib)
 <p align="center">
   Made with ❤️ and ☕ by <strong>Abu Bakar Rakib</strong>
 </p>
+
+
+
+
